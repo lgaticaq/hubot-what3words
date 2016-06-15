@@ -19,7 +19,9 @@ add `["hubot-what3words"]` to `external-scripts.json`.
 
 ## Example
 `hubot w3w addr <address>` -> `Get w3w from address`
+
 `hubot w3w coords <lat>,<lng>` -> `Get w3w from coordinates`
+
 `hubot w3w lang <lang>` ->  `Set language`
 
 
