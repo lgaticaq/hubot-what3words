@@ -1,5 +1,6 @@
 node_modules
 coverage
 test
+CHANGELOG.md
 LICENSE
 .*
