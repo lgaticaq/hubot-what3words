@@ -1,6 +1,6 @@
 {
   "name": "hubot-what3words",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A hubot script to get what3words from a address or coordinates",
   "main": "src",
   "scripts": {
