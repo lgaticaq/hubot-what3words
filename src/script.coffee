@@ -4,7 +4,7 @@
 # Dependencies:
 #   "geo.what3words": "^2.0.0",
 #   "iso-639-1": "^1.2.1",
-#   "node-geocoder": "^3.11.0"
+#   "node-geocoder": "^3.15.1"
 #
 # Configuration:
 #   W3W_API_KEY
@@ -23,42 +23,52 @@ What3Words = require("geo.what3words")
 iso6391 = require("iso-639-1")
 
 module.exports = (robot) ->
-
-  LANG = robot.brain.get("w3w:lang") or process.env.W3W_LANG or "en"
-  LANG = if iso6391.validate(LANG) then LANG else "en"
-
-  w3w = new What3Words(process.env.W3W_API_KEY, {language: LANG})
-  geocoder = NodeGeocoder({provider: "google"})
+  getLang = () ->
+    lang = robot.brain.get("w3w:lang") or process.env.W3W_LANG or "en"
+    return if iso6391.validate(lang) then lang else "en"
 
   robot.respond /w3w addr ([\w\W]+)/, (res) ->
     address = res.match[1]
+    geocoder = NodeGeocoder({provider: "google"})
     geocoder.geocode(address).then (results) ->
       coords = "#{results[0].latitude},#{results[0].longitude}"
-      return w3w.reverse({coords: coords, lang: LANG})
+      lang = getLang()
+      w3w = new What3Words(process.env.W3W_API_KEY, {language: lang})
+      return w3w.reverse({coords: coords, lang: lang})
     .then (response) ->
       res.send response
     .catch (err) ->
-      res.reply "an error occurred"
+      res.reply err.message or "an error occurred"
       robot.emit "error", err
 
   robot.respond /w3w coords (-?\d+\.\d+),(-?\d+\.\d+)/, (res) ->
     latitude = res.match[1]
     longitude = res.match[2]
-    w3w.reverse({coords: "#{latitude},#{longitude}", lang: LANG})
-    .then (response) ->
-      res.send response
-    .catch (err) ->
-      res.reply "an error occurred"
+    lang = getLang()
+    try
+      w3w = new What3Words(process.env.W3W_API_KEY, {language: lang})
+      w3w.reverse({coords: "#{latitude},#{longitude}", lang: lang})
+      .then (response) ->
+        res.send response
+      .catch (err) ->
+        res.reply err.message or "an error occurred"
+        robot.emit "error", err
+    catch err
+      res.reply err.message
       robot.emit "error", err
 
   robot.respond /w3w lang (\w{2})/i, (res) ->
     lang = res.match[1].trim()
     unless iso6391.validate(lang)
       return res.reply "#{lang} is not a valid ISO-639-1 language"
-    w3w.getLanguages({}).then (languages) ->
-      unless lang in languages
-        msg = "#{lang} is not available. Only #{languages.join(", ")}"
-        return res.reply msg
-      robot.brain.set("w3w:lang", lang)
-      LANG = lang
-      res.send "Language set at \"#{iso6391.getName(lang)}\""
+    try
+      w3w = new What3Words(process.env.W3W_API_KEY, {language: getLang()})
+      w3w.getLanguages({}).then (languages) ->
+        unless lang in languages
+          msg = "#{lang} is not available. Only #{languages.join(", ")}"
+          return res.reply msg
+        robot.brain.set("w3w:lang", lang)
+        res.send "Language set at \"#{iso6391.getName(lang)}\""
+    catch err
+      res.reply err.message
+      robot.emit "error", err
