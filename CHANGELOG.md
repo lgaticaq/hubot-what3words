@@ -1,3 +1,12 @@
+#### 0.0.3 (2016-12-4)
+
+##### Chores
+
+* **npm:** Update ignores ([fbe5e590](https://github.com/lgaticaq/hubot-what3words/commit/fbe5e5905640f8dc93e86a62dc36b42305c7c8a1))
+* **travis:** Add node v7 ([40fd6578](https://github.com/lgaticaq/hubot-what3words/commit/40fd6578e4b1e28d33b657c22c60138d4f1be44a))
+* **package:** Update dependencies ([11a5435d](https://github.com/lgaticaq/hubot-what3words/commit/11a5435dcc1a8056d5506aeb1157a03e172a5d8c))
+* **nvm:** Update node version ([e8664c7d](https://github.com/lgaticaq/hubot-what3words/commit/e8664c7d26dfd11d49629f0c90ecbe7ff19ba52e))
+
 #### 0.0.2 (2016-11-12)
 
 ##### Chores
