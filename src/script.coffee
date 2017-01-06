@@ -47,9 +47,15 @@ module.exports = (robot) ->
     lang = getLang()
     try
       w3w = new What3Words(process.env.W3W_API_KEY, {language: lang})
-      w3w.reverse({coords: "#{latitude},#{longitude}", lang: lang})
-      .then (response) ->
-        res.send response
+      geocoder = NodeGeocoder({provider: "google"})
+      promises = [
+        w3w.reverse({coords: "#{latitude},#{longitude}", lang: lang})
+        geocoder.reverse({lat: latitude, lon: longitude})
+      ]
+      Promise.all(promises)
+      .then (results) ->
+        address = results[1][0].formattedAddress
+        res.send "w3w: #{results[0]}\naddress: #{address}"
       .catch (err) ->
         res.reply err.message or "an error occurred"
         robot.emit "error", err

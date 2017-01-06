@@ -9,6 +9,9 @@ nodeGeocoderStub = () ->
         reject(new Error("Not found"))
       else
         resolve([{latitude: -33.4666204, longitude: -70.62697539999999}])
+  reverse: (coordinates) ->
+    return new Promise (resolve) ->
+      resolve([{formattedAddress: 'Vicuña Mackenna 1, Santiago'}])
 class What3wordsStub
   constructor: (apiKey, options) ->
     if typeof apiKey is "undefined"
@@ -61,7 +64,10 @@ describe "hubot-what3words", ->
     it "should get a w3w", ->
       expect(room.messages).to.eql([
         ["user", "hubot w3w coords -33.4666204,-70.62697539999999"]
-        ["hubot", "presume.wiggly.crimson"]
+        [
+          "hubot",
+          "w3w: presume.wiggly.crimson\naddress: Vicuña Mackenna 1, Santiago"
+        ]
       ])
 
   context "set lang", ->
