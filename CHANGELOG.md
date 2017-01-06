@@ -1,3 +1,13 @@
+#### 0.0.4 (2017-1-6)
+
+##### Chores
+
+* **package:** Update dependencies ([aa87eb58](https://github.com/lgaticaq/hubot-what3words/commit/aa87eb58649c88762079fa82c5c26b21b229abb6))
+
+##### New Features
+
+* **reverse:** Add address in reverse coordinates. Close #1 ([ad033ea1](https://github.com/lgaticaq/hubot-what3words/commit/ad033ea186f71c5456693e41b293b176716686e8))
+
 #### 0.0.3 (2016-12-4)
 
 ##### Chores
