@@ -1188,9 +1188,9 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-node-geocoder@^3.15.2:
-  version "3.21.0"
-  resolved "https://registry.yarnpkg.com/node-geocoder/-/node-geocoder-3.21.0.tgz#bade2d99207ff59bb0ce5cd9bb397f0c6b4e9fc4"
+node-geocoder@^3.0.0:
+  version "3.21.1"
+  resolved "https://registry.yarnpkg.com/node-geocoder/-/node-geocoder-3.21.1.tgz#79ce5f49905a09a735ea523081b680e652ed3323"
   dependencies:
     bluebird "^3.4.6"
     request "^2.74.0"
